@@ -121,7 +121,7 @@ class kinozal
 	        $dateTime = $date.' '.$time;
 	        return $dateTime;
 	    }
-	    elseif (preg_match('/\d{2} \D* \d{4} в \d{2}:\d{2}/', $data))
+	    elseif (preg_match('/\d{1,2} \D* \d{4} в \d{2}:\d{2}/', $data))
 	    {
 			$pieces = explode(' ', $data);
 			switch ($pieces[1])
@@ -139,10 +139,8 @@ class kinozal
 			    case "ноября": $m='11'; break;
 			    case "декабря": $m='12'; break;
 			}
-			$date = $pieces[2].'-'.$m.'-'.$pieces[0];
-			$time = $pieces[4].':00';
-			$dateTime = $date.' '.$time;
-			return $dateTime;
+            $dateTime=date_create_from_format("Y-m-j G:i", $pieces[2].'-'.$m.'-'.$pieces[0].' '.$pieces[4]);
+            return date_format($dateTime,"Y-m-d H:i:s");
 	    }
 	}
 	
